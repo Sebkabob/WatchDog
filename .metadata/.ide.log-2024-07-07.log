@@ -1,0 +1,187 @@
+2024-07-07 11:50:54,503 [INFO] Gpio:277 - dependency for GPIO []
+2024-07-07 11:51:07,798 [INFO] Gpio:277 - dependency for GPIO []
+2024-07-07 11:51:09,729 [INFO] Gpio:277 - dependency for GPIO []
+2024-07-07 11:51:13,197 [INFO] Gpio:277 - dependency for GPIO []
+2024-07-07 11:51:15,149 [INFO] Gpio:277 - dependency for GPIO []
+2024-07-07 11:51:24,300 [INFO] Gpio:277 - dependency for GPIO []
+2024-07-07 11:51:59,630 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 235277024 Bytes (759169024)
+2024-07-07 11:52:01,884 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 232680336 Bytes (759169024)
+2024-07-07 11:52:03,477 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 278343528 Bytes (759169024)
+2024-07-07 11:52:03,632 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: NVIC
+2024-07-07 11:52:03,632 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: SYS
+2024-07-07 11:52:03,632 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: GPIO
+2024-07-07 11:52:03,632 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RCC
+2024-07-07 11:52:03,634 [INFO] CodeGenerator:807 - code generatio: config db path: C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.11.1.202404110753\\db\
+2024-07-07 11:52:03,709 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\license.tmp_save
+2024-07-07 11:52:03,817 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\license.tmp
+2024-07-07 11:52:03,882 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\gpio.tmp_save
+2024-07-07 11:52:04,008 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\gpio.tmp
+2024-07-07 11:52:04,099 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_it.c_save
+2024-07-07 11:52:04,305 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_it.c
+2024-07-07 11:52:04,353 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_it.h_save
+2024-07-07 11:52:04,455 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_it.h
+2024-07-07 11:52:04,521 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_hal_msp.c_save
+2024-07-07 11:52:04,640 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_hal_msp.c
+2024-07-07 11:52:04,650 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\system.tmp_save
+2024-07-07 11:52:04,721 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\system.tmp
+2024-07-07 11:52:04,753 [INFO] CodeEngine:311 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_hal_conf.h_save
+2024-07-07 11:52:04,856 [INFO] CodeEngine:335 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_hal_conf.h
+2024-07-07 11:52:04,901 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\main.h_save
+2024-07-07 11:52:04,981 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\main.h
+2024-07-07 11:52:05,004 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\main.c_save
+2024-07-07 11:52:05,104 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\main.c
+2024-07-07 11:52:05,346 [INFO] ProjectBuilder:3163 - Time for Copy HAL[1] : 129mS.
+2024-07-07 11:52:05,349 [INFO] ProjectBuilder:4736 - Project Generator version: 4.3.0-B58
+2024-07-07 11:52:05,389 [INFO] ConfigFileManager:1503 - The Die is : DIE444
+2024-07-07 11:52:06,371 [INFO] ProjectBuilder:5002 - Time for Generating toolchain IDE Files: 1023mS.
+2024-07-07 11:52:06,372 [INFO] ProjectBuilder:3034 - Time for Copy CMSIS : 1mS.
+2024-07-07 11:52:06,373 [INFO] ProjectBuilder:3034 - Time for Copy CMSIS : 0mS.
+2024-07-07 13:32:47,174 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:33:02,558 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,2,27,440x302,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2024-07-07 13:33:03,909 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:33:12,672 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:33:12,723 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2024-07-07 13:33:12,794 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:33:12,857 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2024-07-07 13:33:13,043 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:33:13,110 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2024-07-07 13:33:17,971 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:33:56,017 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 613033928 Bytes (754974720)
+2024-07-07 13:33:57,305 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 624902976 Bytes (754974720)
+2024-07-07 13:33:59,806 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 226866368 Bytes (754974720)
+2024-07-07 13:34:00,315 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: NVIC
+2024-07-07 13:34:00,316 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: SYS
+2024-07-07 13:34:00,316 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: GPIO
+2024-07-07 13:34:00,316 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RCC
+2024-07-07 13:34:00,318 [INFO] CodeGenerator:807 - code generatio: config db path: C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.11.1.202404110753\\db\
+2024-07-07 13:34:00,430 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\license.tmp_save
+2024-07-07 13:34:00,631 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\license.tmp
+2024-07-07 13:34:00,762 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\gpio.tmp_save
+2024-07-07 13:34:01,006 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\gpio.tmp
+2024-07-07 13:34:01,146 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_it.c_save
+2024-07-07 13:34:01,544 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_it.c
+2024-07-07 13:34:01,557 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_it.h_save
+2024-07-07 13:34:01,764 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_it.h
+2024-07-07 13:34:01,821 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_hal_msp.c_save
+2024-07-07 13:34:02,031 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_hal_msp.c
+2024-07-07 13:34:02,040 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\system.tmp_save
+2024-07-07 13:34:02,181 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\system.tmp
+2024-07-07 13:34:02,232 [INFO] CodeEngine:311 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_hal_conf.h_save
+2024-07-07 13:34:02,447 [INFO] CodeEngine:335 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_hal_conf.h
+2024-07-07 13:34:02,533 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\main.h_save
+2024-07-07 13:34:02,753 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\main.h
+2024-07-07 13:34:02,790 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\main.c_save
+2024-07-07 13:34:03,043 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\main.c
+2024-07-07 13:34:03,661 [INFO] ProjectBuilder:3163 - Time for Copy HAL[1] : 322mS.
+2024-07-07 13:34:03,666 [INFO] ProjectBuilder:4736 - Project Generator version: 4.3.0-B58
+2024-07-07 13:34:03,836 [INFO] ConfigFileManager:1503 - The Die is : DIE444
+2024-07-07 13:34:05,361 [INFO] ProjectBuilder:5002 - Time for Generating toolchain IDE Files: 1695mS.
+2024-07-07 13:34:05,363 [INFO] ProjectBuilder:3034 - Time for Copy CMSIS : 1mS.
+2024-07-07 13:34:05,368 [INFO] ProjectBuilder:3034 - Time for Copy CMSIS : 0mS.
+2024-07-07 13:36:35,997 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:36:36,616 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:36:42,960 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:36:43,012 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2024-07-07 13:36:43,097 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:36:43,168 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2024-07-07 13:36:43,330 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:36:43,390 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2024-07-07 13:36:46,462 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:36:46,581 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:36:46,788 [INFO] Gpio:277 - dependency for GPIO [SYS]
+2024-07-07 13:36:50,540 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 339659592 Bytes (754974720)
+2024-07-07 13:36:52,372 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 233716536 Bytes (754974720)
+2024-07-07 13:36:55,320 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 282039056 Bytes (754974720)
+2024-07-07 13:36:55,855 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: NVIC
+2024-07-07 13:36:55,855 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: SYS
+2024-07-07 13:36:55,856 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: GPIO
+2024-07-07 13:36:55,856 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RCC
+2024-07-07 13:36:55,859 [INFO] CodeGenerator:807 - code generatio: config db path: C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.11.1.202404110753\\db\
+2024-07-07 13:36:55,973 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\license.tmp_save
+2024-07-07 13:36:56,131 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\license.tmp
+2024-07-07 13:36:56,239 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\gpio.tmp_save
+2024-07-07 13:36:56,443 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\gpio.tmp
+2024-07-07 13:36:56,582 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_it.c_save
+2024-07-07 13:36:56,822 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_it.c
+2024-07-07 13:36:56,841 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_it.h_save
+2024-07-07 13:36:56,973 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_it.h
+2024-07-07 13:36:57,033 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_hal_msp.c_save
+2024-07-07 13:36:57,200 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_hal_msp.c
+2024-07-07 13:36:57,207 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\system.tmp_save
+2024-07-07 13:36:57,319 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\system.tmp
+2024-07-07 13:36:57,354 [INFO] CodeEngine:311 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_hal_conf.h_save
+2024-07-07 13:36:57,565 [INFO] CodeEngine:335 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_hal_conf.h
+2024-07-07 13:36:57,632 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\main.h_save
+2024-07-07 13:36:57,784 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\main.h
+2024-07-07 13:36:57,817 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\main.c_save
+2024-07-07 13:36:58,039 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\main.c
+2024-07-07 13:36:58,529 [INFO] ProjectBuilder:3163 - Time for Copy HAL[1] : 249mS.
+2024-07-07 13:36:58,533 [INFO] ProjectBuilder:4736 - Project Generator version: 4.3.0-B58
+2024-07-07 13:36:58,639 [INFO] ConfigFileManager:1503 - The Die is : DIE444
+2024-07-07 13:37:00,061 [INFO] ProjectBuilder:5002 - Time for Generating toolchain IDE Files: 1528mS.
+2024-07-07 13:37:00,063 [INFO] ProjectBuilder:3034 - Time for Copy CMSIS : 1mS.
+2024-07-07 13:37:00,067 [INFO] ProjectBuilder:3034 - Time for Copy CMSIS : 0mS.
+2024-07-07 20:22:15,725 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 269538664 Bytes (754974720)
+2024-07-07 20:22:16,813 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 290334568 Bytes (754974720)
+2024-07-07 20:22:18,291 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 328247304 Bytes (754974720)
+2024-07-07 20:22:18,455 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: NVIC
+2024-07-07 20:22:18,455 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: SYS
+2024-07-07 20:22:18,455 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: GPIO
+2024-07-07 20:22:18,455 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RCC
+2024-07-07 20:22:18,455 [INFO] CodeGenerator:807 - code generatio: config db path: C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.11.1.202404110753\\db\
+2024-07-07 20:22:18,518 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\license.tmp_save
+2024-07-07 20:22:18,655 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\license.tmp
+2024-07-07 20:22:18,690 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\gpio.tmp_save
+2024-07-07 20:22:18,826 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\gpio.tmp
+2024-07-07 20:22:18,885 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_it.c_save
+2024-07-07 20:22:19,017 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_it.c
+2024-07-07 20:22:19,023 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_it.h_save
+2024-07-07 20:22:19,095 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_it.h
+2024-07-07 20:22:19,133 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_hal_msp.c_save
+2024-07-07 20:22:19,203 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_hal_msp.c
+2024-07-07 20:22:19,212 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\system.tmp_save
+2024-07-07 20:22:19,262 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\system.tmp
+2024-07-07 20:22:19,299 [INFO] CodeEngine:311 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_hal_conf.h_save
+2024-07-07 20:22:19,448 [INFO] CodeEngine:335 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_hal_conf.h
+2024-07-07 20:22:19,521 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\main.h_save
+2024-07-07 20:22:19,639 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\main.h
+2024-07-07 20:22:19,679 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\main.c_save
+2024-07-07 20:22:19,822 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\main.c
+2024-07-07 20:22:20,073 [INFO] ProjectBuilder:3163 - Time for Copy HAL[1] : 157mS.
+2024-07-07 20:22:20,073 [INFO] ProjectBuilder:4736 - Project Generator version: 4.3.0-B58
+2024-07-07 20:22:20,104 [INFO] ConfigFileManager:1503 - The Die is : DIE444
+2024-07-07 20:22:21,074 [INFO] ProjectBuilder:5002 - Time for Generating toolchain IDE Files: 1000mS.
+2024-07-07 20:22:21,074 [INFO] ProjectBuilder:3034 - Time for Copy CMSIS : 0mS.
+2024-07-07 20:22:21,076 [INFO] ProjectBuilder:3034 - Time for Copy CMSIS : 0mS.
+2024-07-07 20:24:28,756 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 359330952 Bytes (754974720)
+2024-07-07 20:24:29,717 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 228014672 Bytes (754974720)
+2024-07-07 20:24:31,148 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 213846392 Bytes (754974720)
+2024-07-07 20:24:31,304 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: NVIC
+2024-07-07 20:24:31,304 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: SYS
+2024-07-07 20:24:31,304 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: GPIO
+2024-07-07 20:24:31,304 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RCC
+2024-07-07 20:24:31,305 [INFO] CodeGenerator:807 - code generatio: config db path: C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.11.1.202404110753\\db\
+2024-07-07 20:24:31,335 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\license.tmp_save
+2024-07-07 20:24:31,459 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\license.tmp
+2024-07-07 20:24:31,484 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\gpio.tmp_save
+2024-07-07 20:24:31,596 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\gpio.tmp
+2024-07-07 20:24:31,639 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_it.c_save
+2024-07-07 20:24:31,713 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_it.c
+2024-07-07 20:24:31,718 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_it.h_save
+2024-07-07 20:24:31,754 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_it.h
+2024-07-07 20:24:31,780 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_hal_msp.c_save
+2024-07-07 20:24:31,854 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\stm32f0xx_hal_msp.c
+2024-07-07 20:24:31,856 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\system.tmp_save
+2024-07-07 20:24:31,888 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\MXTmpFiles\system.tmp
+2024-07-07 20:24:31,920 [INFO] CodeEngine:311 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_hal_conf.h_save
+2024-07-07 20:24:32,082 [INFO] CodeEngine:335 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\stm32f0xx_hal_conf.h
+2024-07-07 20:24:32,150 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\main.h_save
+2024-07-07 20:24:32,263 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Inc\main.h
+2024-07-07 20:24:32,295 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\main.c_save
+2024-07-07 20:24:32,408 [INFO] CodeEngine:279 - Generated code: C:\Users\sebfo\STM32CubeIDE\workspace_1.15.1\The WatchDog\Core\Src\main.c
+2024-07-07 20:24:32,564 [INFO] ProjectBuilder:3163 - Time for Copy HAL[1] : 64mS.
+2024-07-07 20:24:32,566 [INFO] ProjectBuilder:4736 - Project Generator version: 4.3.0-B58
+2024-07-07 20:24:32,598 [INFO] ConfigFileManager:1503 - The Die is : DIE444
+2024-07-07 20:24:32,943 [INFO] ProjectBuilder:5002 - Time for Generating toolchain IDE Files: 378mS.
+2024-07-07 20:24:32,944 [INFO] ProjectBuilder:3034 - Time for Copy CMSIS : 1mS.
+2024-07-07 20:24:32,946 [INFO] ProjectBuilder:3034 - Time for Copy CMSIS : 1mS.

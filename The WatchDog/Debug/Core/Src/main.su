@@ -1,0 +1,12 @@
+../Core/Src/main.c:33:9:platform_write	48	static
+../Core/Src/main.c:38:9:platform_read	56	static
+../Core/Src/main.c:46:6:platform_delay	16	static
+../Core/Src/main.c:51:6:lis3dh_read_data_polling	40	static
+../Core/Src/main.c:128:5:theCode	24	static
+../Core/Src/main.c:139:6:allState	16	static
+../Core/Src/main.c:149:6:twiScan	16	static
+../Core/Src/main.c:160:6:buttonsNlights	8	static
+../Core/Src/main.c:184:6:BeepX	32	static
+../Core/Src/main.c:236:5:main	24	static
+../Core/Src/main.c:332:6:SystemClock_Config	96	static
+../Core/Src/main.c:378:6:Error_Handler	8	static,ignoring_inline_asm

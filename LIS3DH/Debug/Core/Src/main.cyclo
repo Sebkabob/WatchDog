@@ -1,0 +1,9 @@
+../Core/Src/main.c:21:5:main	4
+../Core/Src/main.c:57:6:LIS3DH_Init	1
+../Core/Src/main.c:63:6:LIS3DH_Read_Accel	1
+../Core/Src/main.c:76:9:LIS3DH_Read_Register	1
+../Core/Src/main.c:83:6:LIS3DH_Write_Register	1
+../Core/Src/main.c:89:13:MX_I2C1_Init	2
+../Core/Src/main.c:107:13:MX_GPIO_Init	1
+../Core/Src/main.c:122:6:SystemClock_Config	1
+../Core/Src/main.c:128:6:Error_Handler	1
