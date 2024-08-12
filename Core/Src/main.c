@@ -20,7 +20,7 @@
 #include "main.h"
 #include "i2c.h"
 #include "gpio.h"
-
+// made a comment
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lis3dh_reg.h"
