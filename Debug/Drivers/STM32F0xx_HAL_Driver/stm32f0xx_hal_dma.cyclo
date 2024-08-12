@@ -1,0 +1,14 @@
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:137:19:HAL_DMA_Init	2
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:199:19:HAL_DMA_DeInit	2
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:281:19:HAL_DMA_Start	3
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:328:19:HAL_DMA_Start_IT	4
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:384:19:HAL_DMA_Abort	2
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:422:19:HAL_DMA_Abort_IT	3
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:468:19:HAL_DMA_PollForTransfer	10
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:569:6:HAL_DMA_IRQHandler	12
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:661:19:HAL_DMA_RegisterCallback	9
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:712:19:HAL_DMA_UnRegisterCallback	8
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:788:22:HAL_DMA_GetState	1
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:799:10:HAL_DMA_GetError	1
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:825:13:DMA_SetConfig	2
+C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c:859:13:DMA_CalcBaseAndBitshift	1
