@@ -29,6 +29,8 @@
 
 #define SENSOR_BUS hi2c1
 
+uint8_t *bufp1;
+
 #define LIS3DH_ADDRESS 0x18
 
 static uint8_t whoamI;
@@ -109,15 +111,17 @@ void GoodSound() {
 	HAL_Delay(500);
 }
 
-void twiScan(void) {
+
+int8_t twiScan() {
 	for (uint8_t i = 0; i < 128; i++) {
 		if (HAL_I2C_IsDeviceReady(&hi2c1, (uint16_t)(i<<1), 3, 5) == HAL_OK) {
 			  // We got an ack
 			if (i == LIS3DH_ADDRESS) {
-				GoodSound();
+				return 1;
 			}
 		}
 	}
+	return 0;
 }
 
 //static uint8_t tx_buffer[1000];
@@ -125,12 +129,12 @@ void twiScan(void) {
 /** Please note that is MANDATORY: return 0 -> no Error.**/
 int32_t platform_write(void *handle, uint8_t reg, const uint8_t *bufp, uint16_t len) {
 	reg |= 0x80;
-	HAL_I2C_Mem_Write(handle, LIS3DH_ADDRESS, reg, 1, (uint8_t*) bufp, len, 1000); //define 8bit
+	HAL_I2C_Mem_Write(handle, 0x30, reg, 1, (uint8_t*) bufp, len, 1000); //define 8bit
 }
 
 int32_t platform_read(void *handle, uint8_t reg, uint8_t *bufp, uint16_t len) {
 	reg |= 0x80;
-	HAL_I2C_Mem_Read(handle, LIS3DH_ADDRESS, reg, 1, bufp, len, 1000);
+	HAL_I2C_Mem_Read(handle, 0x30, reg, 1, bufp, len, 1000);
 }
 
 /** Optional (may be required by driver) **/
@@ -139,19 +143,14 @@ void platform_delay(uint32_t millisec) {
 }
 
 
-void lis3dh_read_data_polling(void)
+void UpdateValues(void)
 {
-  /* Initialize mems driver interface */
   stmdev_ctx_t dev_ctx;
   dev_ctx.write_reg = platform_write;
   dev_ctx.read_reg = platform_read;
   dev_ctx.mdelay = platform_delay;
   dev_ctx.handle = &SENSOR_BUS;
-  /* Wait boot time and initialize platform specific hardware */
-  platform_init();
-  /* Wait sensor boot time */
   platform_delay(10);
-  /* Check device ID */
   lis3dh_device_id_get(&dev_ctx, &whoamI);
 
   if (whoamI != LIS3DH_ID) {
@@ -163,7 +162,7 @@ void lis3dh_read_data_polling(void)
   /* Enable Block Data Update. */
   lis3dh_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);
   /* Set Output Data Rate to 1Hz. */
-  lis3dh_data_rate_set(&dev_ctx, LIS3DH_ODR_1Hz);
+  lis3dh_data_rate_set(&dev_ctx, LIS3DH_ODR_10Hz);
   /* Set full scale to 2g. */
   lis3dh_full_scale_set(&dev_ctx, LIS3DH_2g);
   /* Enable temperature sensor. */
@@ -171,15 +170,11 @@ void lis3dh_read_data_polling(void)
   /* Set device in continuous mode with 12 bit resol. */
   lis3dh_operating_mode_set(&dev_ctx, LIS3DH_HR_12bit);
 
-  /* Read samples in polling mode (no int) */
-  int ii = 1;
-  while (ii == 1) {
     lis3dh_reg_t reg;
     /* Read output only if new value available */
     lis3dh_xl_data_ready_get(&dev_ctx, &reg.byte);
 
     if (reg.byte) {
-      /* Read accelerometer data */
       memset(data_raw_acceleration, 0x00, 3 * sizeof(int16_t));
       lis3dh_acceleration_raw_get(&dev_ctx, data_raw_acceleration);
       acceleration_mg[0] =
@@ -188,8 +183,6 @@ void lis3dh_read_data_polling(void)
         lis3dh_from_fs2_hr_to_mg(data_raw_acceleration[1]);
       acceleration_mg[2] =
         lis3dh_from_fs2_hr_to_mg(data_raw_acceleration[2]);
-      //sprintf((char *)tx_buffer, "Acceleration [mg]:%4.2f\t%4.2f\t%4.2f\r\n", acceleration_mg[0], acceleration_mg[1], acceleration_mg[2]);
-      //tx_com(tx_buffer, strlen((char const *)tx_buffer));
     }
 
     lis3dh_temp_data_ready_get(&dev_ctx, &reg.byte);
@@ -199,12 +192,61 @@ void lis3dh_read_data_polling(void)
       memset(&data_raw_temperature, 0x00, sizeof(int16_t));
       lis3dh_temperature_raw_get(&dev_ctx, &data_raw_temperature);
       temperature_degC = lis3dh_from_lsb_hr_to_celsius(data_raw_temperature);
-      //sprintf((char *)tx_buffer, "Temperature [degC]:%6.2f\r\n", temperature_degC);
-      //tx_com(tx_buffer, strlen((char const *)tx_buffer));
     }
-    ii = 2;
-  }
+}
 
+void TempLightBar() {
+	  UpdateValues();
+	  if (temperature_degC > 32) {
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 0);
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+	  } else if (temperature_degC > 30.5) {
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+	  } else if (temperature_degC > 29) {
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+	  } else if (temperature_degC > 27.5) {
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+	  } else if (temperature_degC < 27.5) {
+		  allState(1);
+	  }
+}
+
+void AccelLightBarX() {
+	  UpdateValues();
+	  if (acceleration_mg[0] > 900) {
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 0);
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+	  } else if (acceleration_mg[0] > 675) {
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+	  } else if (acceleration_mg[0] > 450) {
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+	  } else if (acceleration_mg[0] > 225) {
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+	  } else if (acceleration_mg[0] < 225) {
+		  allState(1);
+	  }
 }
 
 
@@ -282,49 +324,49 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  buttonsNlights();
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0) // Assuming active low
-	  {
-		  if (theCode(1,0,1,0)) //button 1, button 2, button 3, button 4
-		  {
-			  int time = 1; // in seconds
-			  int q = time * 5;
-			  for (int i = 0 ; i <= q; i++)
-			  {
-				  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_1);
-				  HAL_Delay(200);
-			  }
-			  allState(1);
-		  }
-			  else
-			  {
-				  allState(0);
-				  HAL_Delay(100);
-				  allState(1);
-				  twiScan();
-				  //BeepX(1,30);
-				  //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, 1);
-				  //HAL_Delay(3);
-				  //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, 0);
+	  AccelLightBarX();
 
-				  lis3dh_read_data_polling();
-				  if (temperature_degC > 23) {
-					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_11);
-					  HAL_Delay(500);
-				  } else if (temperature_degC > 22) {
-					  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_6);
-					  HAL_Delay(500);
-				  } else if (temperature_degC > 10) {
-					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
-					  HAL_Delay(500);
-				  } else if (temperature_degC < 10) {
-					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
-					  HAL_Delay(500);
-				  }
-				  allState(1);
-
-			  }
-	  }
+//	  buttonsNlights();
+//	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0) // Assuming active low
+//	  {
+//		  if (theCode(1,0,1,0)) //button 1, button 2, button 3, button 4
+//		  {
+//			  int time = 1; // in seconds
+//			  int q = time * 5;
+//			  for (int i = 0 ; i <= q; i++)
+//			  {
+//				  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_1);
+//				  HAL_Delay(200);
+//			  }
+//			  allState(1);
+//		  }
+//			  else
+//			  {
+//				  allState(1);
+//				  UpdateValues();
+//				  if (temperature_degC > 33) {
+//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_11);
+//					  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_6);
+//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
+//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
+//					  HAL_Delay(500);
+//				  } else if (temperature_degC > 31) {
+//					  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_6);
+//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
+//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
+//					  HAL_Delay(500);
+//				  } else if (temperature_degC > 29) {
+//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
+//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
+//					  HAL_Delay(500);
+//				  } else if (temperature_degC < 27) {
+//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
+//					  HAL_Delay(500);
+//				  }
+//				  allState(1);
+//
+//			  }
+//	  }
   }
 
 //enter code
