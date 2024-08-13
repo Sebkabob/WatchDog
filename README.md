@@ -1,3 +1,3 @@
-# The-WatchDog-Repo
+# The Watchdog
 
-Alex do not make any changes or create branches until I get I2C working, its still super super buggy so once that is solved I will format everything and get you to work on this
+The code is working, and access to the IMU through i2c has been established  
