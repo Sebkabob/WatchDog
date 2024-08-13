@@ -195,57 +195,99 @@ void UpdateValues(void)
     }
 }
 
+void Bar4() {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 0);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+}
+void Bar3() {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+}
+void Bar2() {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+}
+void Bar1() {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+}
+
+
 void TempLightBar() {
 	  UpdateValues();
 	  if (temperature_degC > 32) {
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 0);
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+		  Bar4();
 	  } else if (temperature_degC > 30.5) {
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+		  Bar3();
 	  } else if (temperature_degC > 29) {
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+		  Bar2();
 	  } else if (temperature_degC > 27.5) {
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+		  Bar1();
 	  } else if (temperature_degC < 27.5) {
 		  allState(1);
 	  }
 }
 
-void AccelLightBarX() {
+
+void AccelDetecting() {
+	  Bar4();
+	  HAL_Delay(750);
+	  Bar3();
+	  HAL_Delay(750);
+	  Bar2();
+	  HAL_Delay(750);
+	  Bar1();
+	  HAL_Delay(750);
+	  allState(1);
 	  UpdateValues();
-	  if (acceleration_mg[0] > 900) {
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 0);
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
-	  } else if (acceleration_mg[0] > 675) {
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
-	  } else if (acceleration_mg[0] > 450) {
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
-	  } else if (acceleration_mg[0] > 225) {
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
-	  } else if (acceleration_mg[0] < 225) {
-		  allState(1);
+	  int Xinit = acceleration_mg[0];
+	  int Yinit = acceleration_mg[1];
+	  int Zinit = acceleration_mg[2];
+	  int j = 1;
+	  while (j == 1) {
+		  HAL_Delay(20);
+		  UpdateValues();
+		  HAL_Delay(20);
+		  int Xcurr = acceleration_mg[0];
+		  int Ycurr = acceleration_mg[1];
+		  int Zcurr = acceleration_mg[2];
+		  int Trig5 = 300;
+		  int Trig4 = 250;
+		  int Trig3 = 200;
+		  int Trig2 = 100;
+		  int Trig1 = 50;
+
+		  if (Xcurr - Xinit > Trig5 || Ycurr - Yinit > Trig5 || Zcurr - Zinit > Trig5) {
+			  //BeepX(1,40);
+			  allState(0);
+			  HAL_Delay(300);
+			  //HAL_Delay(500);
+			  //j = 2;
+		  }
+		  else if (Xcurr - Xinit > Trig4 || Ycurr - Yinit > Trig4 || Zcurr - Zinit > Trig4) {
+			  Bar4();
+		  }
+		  else if (Xcurr - Xinit > Trig3 || Ycurr - Yinit > Trig3 || Zcurr - Zinit > Trig3) {
+			  Bar3();
+		  }
+		  else if (Xcurr - Xinit > Trig2 || Ycurr - Yinit > Trig2 || Zcurr - Zinit > Trig2) {
+			  Bar2();
+		  }
+		  else if (Xcurr - Xinit > Trig1 || Ycurr - Yinit > Trig1 || Zcurr - Zinit > Trig1) {
+			  Bar1();
+		  }
+		  else if (Xcurr - Xinit < Trig1 || Ycurr - Yinit < Trig1 || Zcurr - Zinit < Trig1) {
+			  allState(1);
+		  }
+
 	  }
 }
 
@@ -324,7 +366,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  AccelLightBarX();
+	  buttonsNlights();
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0 && theCode(1,0,1,0)) {
+		  AccelDetecting();
+	  }
 
 //	  buttonsNlights();
 //	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0) // Assuming active low
