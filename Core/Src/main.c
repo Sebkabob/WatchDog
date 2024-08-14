@@ -52,6 +52,23 @@ int theCode(int N1, int N2, int N3, int N4) {
     }
 }
 
+int ButtonToDec() {
+	int d = 0;
+	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == 0) {
+		d = d + 1;
+	}
+	if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == 0) {
+		d = d + 2;
+	}
+	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == 0) {
+		d = d + 4;
+	}
+	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == 0) {
+		d = d + 8;
+	}
+	return d;
+}
+
 void allState(int state) {
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, state);
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, state);
@@ -170,9 +187,9 @@ void UpdateValues(void)
   /* Set device in continuous mode with 12 bit resol. */
   lis3dh_operating_mode_set(&dev_ctx, LIS3DH_HR_12bit);
 
-    lis3dh_reg_t reg;
-    /* Read output only if new value available */
-    lis3dh_xl_data_ready_get(&dev_ctx, &reg.byte);
+  lis3dh_reg_t reg;
+  /* Read output only if new value available */
+  lis3dh_xl_data_ready_get(&dev_ctx, &reg.byte);
 
     if (reg.byte) {
       memset(data_raw_acceleration, 0x00, 3 * sizeof(int16_t));
@@ -195,58 +212,42 @@ void UpdateValues(void)
     }
 }
 
-void Bar4() {
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 0);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+
+void BarSet(int n1, int n2, int n3, int n4) {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, n1);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, n2);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, n3);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, n4);
 }
-void Bar3() {
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 0);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
-}
-void Bar2() {
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
-}
-void Bar1() {
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, 1);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, 1);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
-}
+
 
 
 void TempLightBar() {
 	  UpdateValues();
 	  if (temperature_degC > 32) {
-		  Bar4();
+		  BarSet(0,0,0,0);
 	  } else if (temperature_degC > 30.5) {
-		  Bar3();
+		  BarSet(1,0,0,0);
 	  } else if (temperature_degC > 29) {
-		  Bar2();
+		  BarSet(1,1,0,0);
 	  } else if (temperature_degC > 27.5) {
-		  Bar1();
+		  BarSet(1,1,1,0);
 	  } else if (temperature_degC < 27.5) {
-		  allState(1);
+		  BarSet(1,1,1,1);
 	  }
 }
 
 
-void AccelDetecting() {
-	  Bar4();
-	  HAL_Delay(750);
-	  Bar3();
-	  HAL_Delay(750);
-	  Bar2();
-	  HAL_Delay(750);
-	  Bar1();
-	  HAL_Delay(750);
-	  allState(1);
+void AccelDetecting(int sensitivity) {
+	  BarSet(0,0,0,0);
+	  HAL_Delay(500);
+	  BarSet(1,0,0,0);
+	  HAL_Delay(500);
+	  BarSet(1,1,0,0);
+	  HAL_Delay(500);
+	  BarSet(1,1,1,0);
+	  HAL_Delay(500);
+	  BarSet(1,1,1,1);
 	  UpdateValues();
 	  int Xinit = acceleration_mg[0];
 	  int Yinit = acceleration_mg[1];
@@ -259,33 +260,34 @@ void AccelDetecting() {
 		  int Xcurr = acceleration_mg[0];
 		  int Ycurr = acceleration_mg[1];
 		  int Zcurr = acceleration_mg[2];
-		  int Trig5 = 300;
-		  int Trig4 = 250;
-		  int Trig3 = 200;
-		  int Trig2 = 100;
-		  int Trig1 = 50;
+		  int Trig5 = 30 * sensitivity;
+		  int Trig4 = 25 * sensitivity;
+		  int Trig3 = 20 * sensitivity;
+		  int Trig2 = 15 * sensitivity;
+		  int Trig1 = 10 * sensitivity;
 
 		  if (Xcurr - Xinit > Trig5 || Ycurr - Yinit > Trig5 || Zcurr - Zinit > Trig5) {
 			  //BeepX(1,40);
 			  allState(0);
-			  HAL_Delay(300);
+			  HAL_Delay(600);
+			  allState(1);
 			  //HAL_Delay(500);
 			  //j = 2;
 		  }
 		  else if (Xcurr - Xinit > Trig4 || Ycurr - Yinit > Trig4 || Zcurr - Zinit > Trig4) {
-			  Bar4();
+			  BarSet(0,0,0,0);
 		  }
 		  else if (Xcurr - Xinit > Trig3 || Ycurr - Yinit > Trig3 || Zcurr - Zinit > Trig3) {
-			  Bar3();
+			  BarSet(1,0,0,0);
 		  }
 		  else if (Xcurr - Xinit > Trig2 || Ycurr - Yinit > Trig2 || Zcurr - Zinit > Trig2) {
-			  Bar2();
+			  BarSet(1,1,0,0);
 		  }
 		  else if (Xcurr - Xinit > Trig1 || Ycurr - Yinit > Trig1 || Zcurr - Zinit > Trig1) {
-			  Bar1();
+			  BarSet(1,1,1,0);
 		  }
 		  else if (Xcurr - Xinit < Trig1 || Ycurr - Yinit < Trig1 || Zcurr - Zinit < Trig1) {
-			  allState(1);
+			  BarSet(1,1,1,1);
 		  }
 
 	  }
@@ -366,52 +368,19 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  // Converts button presses to LED toggles
 	  buttonsNlights();
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0 && theCode(1,0,1,0)) {
-		  AccelDetecting();
+	  // If a code is entered, will convert from binary to decimal (sensitivity level 1-15)
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0 && theCode(0,0,0,0) != 1) {
+		  int sense = ButtonToDec();
+		  AccelDetecting(sense);
+		  allState(1);
+	  // If no code entered, will display the temperature of the board with the 4 LEDs
+	  } else if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0 && theCode(0,0,0,0)){
+		  while (1) {
+			  TempLightBar();
+		  }
 	  }
-
-//	  buttonsNlights();
-//	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0) // Assuming active low
-//	  {
-//		  if (theCode(1,0,1,0)) //button 1, button 2, button 3, button 4
-//		  {
-//			  int time = 1; // in seconds
-//			  int q = time * 5;
-//			  for (int i = 0 ; i <= q; i++)
-//			  {
-//				  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_1);
-//				  HAL_Delay(200);
-//			  }
-//			  allState(1);
-//		  }
-//			  else
-//			  {
-//				  allState(1);
-//				  UpdateValues();
-//				  if (temperature_degC > 33) {
-//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_11);
-//					  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_6);
-//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
-//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
-//					  HAL_Delay(500);
-//				  } else if (temperature_degC > 31) {
-//					  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_6);
-//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
-//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
-//					  HAL_Delay(500);
-//				  } else if (temperature_degC > 29) {
-//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
-//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
-//					  HAL_Delay(500);
-//				  } else if (temperature_degC < 27) {
-//					  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
-//					  HAL_Delay(500);
-//				  }
-//				  allState(1);
-//
-//			  }
-//	  }
   }
 
 //enter code
