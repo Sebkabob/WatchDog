@@ -1,5 +1,5 @@
-Drivers/STM32F0xx_HAL_Driver/stm32f0xx_hal_gpio.o: \
- C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_gpio.c \
+Drivers/STM32F0xx_HAL_Driver/stm32f0xx_hal_adc_ex.o: \
+ C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_adc_ex.c \
  C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h \
  ../Core/Inc/stm32f0xx_hal_conf.h \
  C:/Users/sebfo/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h \

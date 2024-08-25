@@ -18,9 +18,10 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
 #include "i2c.h"
 #include "gpio.h"
-// made a comment
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lis3dh_reg.h"
@@ -28,6 +29,10 @@
 #include <stdio.h>
 
 #define SENSOR_BUS hi2c1
+
+float BatVol;
+
+int bN[4];
 
 uint8_t *bufp1;
 
@@ -128,6 +133,29 @@ void GoodSound() {
 	HAL_Delay(500);
 }
 
+void BatteryInBinary() {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, 1);
+	  HAL_ADC_Start(&hadc);
+	  BatVol = HAL_ADC_GetValue(&hadc);
+	  BatVol = BatVol / 100;
+	  //BatVol = 5;
+	  decimalToBinary(BatVol);
+	  BarSet(bN[0],bN[1],bN[2],bN[3]);
+	  HAL_ADC_Stop(&hadc);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, 0);
+}
+//((analog reading 0-1024) * 0.00322)/0.787 = +BAT
+
+void BatteryVoltage() {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, 1);
+	  HAL_ADC_Start(&hadc);
+	  float analogVol = HAL_ADC_GetValue(&hadc);
+	  float tmp = analogVol * 0.00322;
+	  BatVol = tmp / 0.787;
+
+	  HAL_ADC_Stop(&hadc);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, 0);
+}
 
 int8_t twiScan() {
 	for (uint8_t i = 0; i < 128; i++) {
@@ -213,81 +241,126 @@ void UpdateValues(void)
 }
 
 
-void BarSet(int n1, int n2, int n3, int n4) {
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, n1);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, n2);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, n3);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, n4);
+int BarSet(int n1, int n2, int n3, int n4) {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, !n1);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, !n2);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, !n3);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, !n4);
 }
 
 
 
 void TempLightBar() {
 	  UpdateValues();
-	  if (temperature_degC > 32) {
-		  BarSet(0,0,0,0);
-	  } else if (temperature_degC > 30.5) {
-		  BarSet(1,0,0,0);
-	  } else if (temperature_degC > 29) {
-		  BarSet(1,1,0,0);
-	  } else if (temperature_degC > 27.5) {
-		  BarSet(1,1,1,0);
-	  } else if (temperature_degC < 27.5) {
+	  if (temperature_degC > 35) {
 		  BarSet(1,1,1,1);
+	  } else if (temperature_degC > 32) {
+		  BarSet(0,1,1,1);
+	  } else if (temperature_degC > 29) {
+		  BarSet(0,0,1,1);
+	  } else if (temperature_degC > 27.5) {
+		  BarSet(0,0,0,1);
+	  } else if (temperature_degC < 27.5) {
+		  BarSet(0,0,0,0);
 	  }
+}
+
+int decimalToBinary(int n) {
+    int i = 0;
+    while (n > 0) {
+        // Storing remainder in binary array
+    	bN[i] = n % 2;
+        n = n / 2;
+        i++;
+    }
+}
+
+void stmSTOP() {
+	GPIO_InitTypeDef GPIO_Init = {0};
+    GPIO_Init.Pin          = GPIO_PIN_0;
+    GPIO_Init.Mode         = GPIO_MODE_EVT_FALLING;
+    GPIO_Init.Pull         = GPIO_PULLUP;
+    HAL_GPIO_Init(GPIOA, &GPIO_Init);
+
+    HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFE);
+
+    //Device is in stop mode
+
+    SystemInit();
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0);
+
+    GPIO_Init.Pin          = GPIO_PIN_0;
+    GPIO_Init.Mode         = GPIO_MODE_INPUT;
+    GPIO_Init.Pull         = GPIO_PULLUP;
+    HAL_GPIO_Init(GPIOA, &GPIO_Init);
 }
 
 
 void AccelDetecting(int sensitivity) {
-	  BarSet(0,0,0,0);
-	  HAL_Delay(500);
-	  BarSet(1,0,0,0);
-	  HAL_Delay(500);
-	  BarSet(1,1,0,0);
-	  HAL_Delay(500);
-	  BarSet(1,1,1,0);
-	  HAL_Delay(500);
 	  BarSet(1,1,1,1);
+	  HAL_Delay(500);
+	  BarSet(0,1,1,1);
+	  HAL_Delay(500);
+	  BarSet(0,0,1,1);
+	  HAL_Delay(500);
+	  BarSet(0,0,0,1);
+	  HAL_Delay(500);
+	  BarSet(0,0,0,0);
 	  UpdateValues();
 	  int Xinit = acceleration_mg[0];
 	  int Yinit = acceleration_mg[1];
 	  int Zinit = acceleration_mg[2];
 	  int j = 1;
+	  HAL_Delay(200);
 	  while (j == 1) {
-		  HAL_Delay(20);
 		  UpdateValues();
-		  HAL_Delay(20);
+		  HAL_Delay(50);
 		  int Xcurr = acceleration_mg[0];
 		  int Ycurr = acceleration_mg[1];
 		  int Zcurr = acceleration_mg[2];
-		  int Trig5 = 30 * sensitivity;
-		  int Trig4 = 25 * sensitivity;
-		  int Trig3 = 20 * sensitivity;
-		  int Trig2 = 15 * sensitivity;
-		  int Trig1 = 10 * sensitivity;
-
+		  int Trig5 = 60 * sensitivity;
+		  int Trig4 = 50 * sensitivity;
+		  int Trig3 = 40 * sensitivity;
+		  int Trig2 = 30 * sensitivity;
+		  int Trig1 = 20 * sensitivity;
+//		  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == 0){
+//			  int i = 0;
+//			  int j = 0;
+//			  int k = 0;
+//			  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4) == 0 && i > 150) {
+//				  HAL_Delay(10);
+//				  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_0) == 0 && j > 150) {
+//					  HAL_Delay(10);
+//					  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == 0 && k > 150) {
+//						  return 1;
+//					  }
+//					  j=j+1;
+//				  }
+//				  i=i+1;
+//			  }
+//		  }
 		  if (Xcurr - Xinit > Trig5 || Ycurr - Yinit > Trig5 || Zcurr - Zinit > Trig5) {
-			  //BeepX(1,40);
 			  allState(0);
-			  HAL_Delay(600);
+			  BeepX(0.5,45);
+			  //HAL_Delay(500);
 			  allState(1);
 			  //HAL_Delay(500);
 			  //j = 2;
 		  }
 		  else if (Xcurr - Xinit > Trig4 || Ycurr - Yinit > Trig4 || Zcurr - Zinit > Trig4) {
-			  BarSet(0,0,0,0);
+			  BarSet(1,1,1,1);
 		  }
 		  else if (Xcurr - Xinit > Trig3 || Ycurr - Yinit > Trig3 || Zcurr - Zinit > Trig3) {
-			  BarSet(1,0,0,0);
+			  BarSet(0,1,1,1);
 		  }
 		  else if (Xcurr - Xinit > Trig2 || Ycurr - Yinit > Trig2 || Zcurr - Zinit > Trig2) {
-			  BarSet(1,1,0,0);
+			  BarSet(0,0,1,1);
 		  }
 		  else if (Xcurr - Xinit > Trig1 || Ycurr - Yinit > Trig1 || Zcurr - Zinit > Trig1) {
-			  BarSet(1,1,1,0);
+			  BarSet(0,0,0,1);
 		  }
 		  else if (Xcurr - Xinit < Trig1 || Ycurr - Yinit < Trig1 || Zcurr - Zinit < Trig1) {
-			  BarSet(1,1,1,1);
+			  BarSet(0,0,0,0);
 		  }
 
 	  }
@@ -360,15 +433,38 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_I2C1_Init();
+  MX_ADC_Init();
   /* USER CODE BEGIN 2 */
+
   allState(1);
+//  GPIO_InitTypeDef GPIO_Init = {0};
+//  GPIO_Init.Pin          = GPIO_PIN_0;
+//  GPIO_Init.Mode         = GPIO_MODE_EVT_FALLING;
+//  GPIO_Init.Pull         = GPIO_PULLUP;
+//  HAL_GPIO_Init(GPIOA, &GPIO_Init);
+//
+//  HAL_SuspendTick();
+//  HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFE);
+//
+//  //Device is asleep
+//
+//  HAL_ResumeTick();
+//  HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0);
+
+  stmSTOP();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  //TO DO: 	Better understand the accel values
+  //		STOP mode for detecting motion
+  //		STANDBY mode for when turned off
+  //		Battery Voltage Detection
+
   while (1)
   {
 	  // Converts button presses to LED toggles
+	  HAL_Delay(50);
 	  buttonsNlights();
 	  // If a code is entered, will convert from binary to decimal (sensitivity level 1-15)
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0 && theCode(0,0,0,0) != 1) {
@@ -394,6 +490,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
+
   /* USER CODE END 3 */
 }
 
@@ -410,9 +507,11 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSI14;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSI14State = RCC_HSI14_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.HSI14CalibrationValue = 16;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
