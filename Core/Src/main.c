@@ -34,6 +34,8 @@ float BatVol;
 
 int bN[4];
 
+int TimOut = 0;
+
 uint8_t *bufp1;
 
 #define LIS3DH_ADDRESS 0x18
@@ -101,21 +103,25 @@ void buttonsNlights() {
 	{
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_11);
 		HAL_Delay(debounce);
+		TimOut = 0;
 	}
 	if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4) == 0)
 	{
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_6);
 		HAL_Delay(debounce);
+		TimOut = 0;
 	}
 	if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_0) == 0)
 	{
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
 		HAL_Delay(debounce);
+		TimOut = 0;
 	}
 	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == 0)
 	{
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
 		HAL_Delay(debounce);
+		TimOut = 0;
 	}
 }
 
@@ -145,17 +151,6 @@ void BatteryInBinary() {
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, 0);
 }
 //((analog reading 0-1024) * 0.00322)/0.787 = +BAT
-
-void BatteryVoltage() {
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, 1);
-	  HAL_ADC_Start(&hadc);
-	  float analogVol = HAL_ADC_GetValue(&hadc);
-	  float tmp = analogVol * 0.00322;
-	  BatVol = tmp / 0.787;
-
-	  HAL_ADC_Stop(&hadc);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, 0);
-}
 
 int8_t twiScan() {
 	for (uint8_t i = 0; i < 128; i++) {
@@ -275,7 +270,54 @@ int decimalToBinary(int n) {
     }
 }
 
-void stmSTOP() {
+void OnAnimation() {
+	int delyuh = 70;
+	BarSet(0,0,0,1);
+	HAL_Delay(delyuh);
+	BarSet(0,0,1,1);
+	HAL_Delay(delyuh);
+	BarSet(0,1,1,0);
+	HAL_Delay(delyuh);
+	BarSet(1,1,0,0);
+	HAL_Delay(delyuh);
+	BarSet(1,0,0,1);
+	HAL_Delay(delyuh);
+	BarSet(0,0,1,1);
+	HAL_Delay(delyuh);
+	BarSet(0,1,1,0);
+	HAL_Delay(delyuh);
+	BarSet(1,1,0,0);
+	HAL_Delay(delyuh);
+	BarSet(1,0,0,0);
+	HAL_Delay(delyuh);
+	BarSet(0,0,0,0);
+	HAL_Delay(delyuh);
+}
+void OffAnimation() {
+	int delyuh = 70;
+	BarSet(1,0,0,0);
+	HAL_Delay(delyuh);
+	BarSet(1,1,0,0);
+	HAL_Delay(delyuh);
+	BarSet(0,1,1,0);
+	HAL_Delay(delyuh);
+	BarSet(0,0,1,1);
+	HAL_Delay(delyuh);
+	BarSet(1,0,0,1);
+	HAL_Delay(delyuh);
+	BarSet(1,1,0,0);
+	HAL_Delay(delyuh);
+	BarSet(0,1,1,0);
+	HAL_Delay(delyuh);
+	BarSet(0,0,1,1);
+	HAL_Delay(delyuh);
+	BarSet(0,0,0,1);
+	HAL_Delay(delyuh);
+	BarSet(0,0,0,0);
+	HAL_Delay(delyuh);
+}
+
+void stmSTOP() { //230% more power efficient than normal mode!
 	GPIO_InitTypeDef GPIO_Init = {0};
     GPIO_Init.Pin          = GPIO_PIN_0;
     GPIO_Init.Mode         = GPIO_MODE_EVT_FALLING;
@@ -293,10 +335,101 @@ void stmSTOP() {
     GPIO_Init.Mode         = GPIO_MODE_INPUT;
     GPIO_Init.Pull         = GPIO_PULLUP;
     HAL_GPIO_Init(GPIOA, &GPIO_Init);
+    OnAnimation();
+    HAL_Delay(200);
+}
+
+void stmSTANDBY() {
+	 if (!__HAL_PWR_GET_FLAG(PWR_FLAG_WU)) {
+			HAL_Delay(500);
+
+			HAL_PWR_DisableWakeUpPin(PWR_WAKEUP_PIN1);
+			__HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+			HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+
+			HAL_PWR_EnterSTANDBYMode();
+
+	  } else {
+
+			HAL_PWR_DisableWakeUpPin(PWR_WAKEUP_PIN1);
+		    OnAnimation();
+
+	  }
+}
+
+void BatteryVoltage() {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, 1);
+	  HAL_ADC_Start(&hadc);
+	  int analogVol = HAL_ADC_GetValue(&hadc);
+	  float tmp = analogVol * 0.00322;
+	  BatVol = tmp / 0.787;
+	  HAL_ADC_Stop(&hadc);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, 0);
+	  int delayee = 100;
+	  if (BatVol > 3.90) {
+		  BarSet(0,0,0,1);
+		  HAL_Delay(delayee);
+		  BarSet(0,0,1,1);
+		  HAL_Delay(delayee);
+		  BarSet(0,1,1,1);
+		  HAL_Delay(delayee);
+		  BarSet(1,1,1,1);
+		  HAL_Delay(delayee*10);
+		  BarSet(0,1,1,1);
+		  HAL_Delay(delayee);
+		  BarSet(0,0,1,1);
+		  HAL_Delay(delayee);
+		  BarSet(0,0,0,1);
+		  HAL_Delay(delayee);
+		  BarSet(0,0,0,0);
+	  }
+	  else if (BatVol > 3.74) {
+		  BarSet(0,0,0,1);
+		  HAL_Delay(delayee);
+		  BarSet(0,0,1,1);
+		  HAL_Delay(delayee);
+		  BarSet(0,1,1,1);
+		  HAL_Delay(delayee*10);
+		  BarSet(0,0,1,1);
+		  HAL_Delay(delayee);
+		  BarSet(0,0,0,1);
+		  HAL_Delay(delayee);
+		  BarSet(0,0,0,0);
+	  }
+	  else if (BatVol > 3.65) {
+		  BarSet(0,0,0,1);
+		  HAL_Delay(delayee);
+		  BarSet(0,0,1,1);
+		  HAL_Delay(delayee*10);
+		  BarSet(0,0,0,1);
+		  HAL_Delay(delayee);
+		  BarSet(0,0,0,0);
+	  }
+	  else if (BatVol > 3.4) {
+		  BarSet(0,0,0,1);
+		  HAL_Delay(delayee*10);
+		  BarSet(0,0,0,0);
+	  }
+	  else if (BatVol < 3.4) {
+		  BarSet(0,0,0,1);
+		  HAL_Delay(delayee*2);
+		  BarSet(0,0,0,0);
+		  HAL_Delay(delayee*2);
+		  BarSet(0,0,0,1);
+		  HAL_Delay(delayee*2);
+		  BarSet(0,0,0,0);
+		  HAL_Delay(delayee*2);
+		  BarSet(0,0,0,1);
+		  HAL_Delay(delayee*2);
+		  BarSet(0,0,0,0);
+	  }
+	  HAL_Delay(200);
+	  allState(1);
 }
 
 
-void AccelDetecting(int sensitivity) {
+
+void AccelDetectingLights(int sensitivity) {
 	  BarSet(1,1,1,1);
 	  HAL_Delay(500);
 	  BarSet(0,1,1,1);
@@ -366,6 +499,40 @@ void AccelDetecting(int sensitivity) {
 	  }
 }
 
+void AccelDetecting(int sensitivity) {
+	  BarSet(1,1,1,1);
+	  HAL_Delay(500);
+	  BarSet(0,1,1,1);
+	  HAL_Delay(500);
+	  BarSet(0,0,1,1);
+	  HAL_Delay(500);
+	  BarSet(0,0,0,1);
+	  HAL_Delay(500);
+	  BarSet(0,0,0,0);
+	  UpdateValues();
+	  int Xinit = acceleration_mg[0];
+	  int Yinit = acceleration_mg[1];
+	  int Zinit = acceleration_mg[2];
+	  int j = 1;
+	  HAL_Delay(200);
+	  while (j == 1) {
+		  UpdateValues();
+		  HAL_Delay(50);
+		  int Xcurr = acceleration_mg[0];
+		  int Ycurr = acceleration_mg[1];
+		  int Zcurr = acceleration_mg[2];
+		  int Trig5 = 60 * sensitivity;
+		  if (Xcurr - Xinit > Trig5 || Ycurr - Yinit > Trig5 || Zcurr - Zinit > Trig5) {
+			  allState(0);
+			  BeepX(0.5,45);
+			  //HAL_Delay(500);
+			  allState(1);
+			  //HAL_Delay(500);
+			  //j = 2;
+		  }
+	  }
+}
+
 
 ///////////////////////////////////////////////////////////////////
 
@@ -409,6 +576,7 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+  allState(1);
 
   /* USER CODE BEGIN 1 */
 
@@ -451,7 +619,7 @@ int main(void)
 //  HAL_ResumeTick();
 //  HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0);
 
-  stmSTOP();
+  stmSTANDBY();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -463,20 +631,29 @@ int main(void)
 
   while (1)
   {
-	  // Converts button presses to LED toggles
-	  HAL_Delay(50);
-	  buttonsNlights();
-	  // If a code is entered, will convert from binary to decimal (sensitivity level 1-15)
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0 && theCode(0,0,0,0) != 1) {
-		  int sense = ButtonToDec();
-		  AccelDetecting(sense);
-		  allState(1);
-	  // If no code entered, will display the temperature of the board with the 4 LEDs
-	  } else if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0 && theCode(0,0,0,0)){
-		  while (1) {
-			  TempLightBar();
+	  TimOut = 0;
+	  while (TimOut < 150) { //if nothing happens, the STM goes back to sleep until its awakened again
+		  // Converts button presses to LED toggles
+		  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1,0);
+		  HAL_Delay(50);
+		  buttonsNlights();
+		  // If a code is entered, will convert from binary to decimal (sensitivity level 1-15)
+		  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0 && theCode(0,0,0,0) != 1) {
+			  int sense = ButtonToDec();
+			  AccelDetecting(sense);
+			  allState(1);
+			  TimOut = 0;
+		  // If no code entered, will display the temperature of the board with the 4 LEDs
+		  } else if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0 && theCode(0,0,0,0)){
+			  //TempLightBar();
+			  BatteryVoltage();
+			  TimOut = 0;
 		  }
+		  TimOut = TimOut + 1;
 	  }
+	  OffAnimation();
+	  allState(1);
+	  stmSTOP();
   }
 
 //enter code
